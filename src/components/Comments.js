@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const Comments = (props) => {
     const handleViewList = () => {
