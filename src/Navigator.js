@@ -2,12 +2,24 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import FeedScreen from './screens/Feed'
 import AddPhotoScreen from './screens/AddPhoto'
 import ProfileScreen from './screens/Profile'
+import LoginScreen from './screens/Login'
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
+
+const authStack = () => {
+    return <Stack.Navigator
+        initialRouteName="Profile"
+    >
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Auth" component={LoginScreen} />
+    </Stack.Navigator>
+}
 
 const Navigator = () => {
     return <NavigationContainer>
@@ -33,6 +45,7 @@ const Navigator = () => {
                     return <FontAwesomeIcon icon={iconName} size={size} color={color} />
                 },
             })}
+            initialRouteName='Feed'
             tabBarOptions={{
                 activeTintColor: 'tomato',
                 inactiveTintColor: 'gray',
@@ -41,7 +54,7 @@ const Navigator = () => {
         >
             <Tab.Screen name="Add Photo" component={AddPhotoScreen} />
             <Tab.Screen name="Feed" component={FeedScreen} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Profile" component={authStack} />
         </Tab.Navigator>
     </NavigationContainer>
 }
