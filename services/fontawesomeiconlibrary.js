@@ -6,11 +6,13 @@ import {
 
 import { 
     faTimes, 
-    faComment
+    faComment,
+    faHome
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
     fab, 
     faTimes,
-    faComment
+    faComment,
+    faHome
 )
