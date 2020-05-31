@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 import FeedScreen from './screens/Feed';
+import AddPhoto from './screens/AddPhoto';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,13 +16,9 @@ const Navigator = () => {
                     let iconName;
 
                     if (route.name === 'Feed') {
-                        iconName = focused
-                            ? 'home'
-                            : 'home';
+                        iconName = 'home'
                     } else{
-                        iconName = focused
-                            ? 'times'
-                            : 'times';
+                        iconName = 'camera'
                     }
 
                     // You can return any component that you like here!
@@ -35,7 +32,7 @@ const Navigator = () => {
             }}
         >
             <Tab.Screen name="Feed" component={FeedScreen} />
-            <Tab.Screen name="Feed2" component={FeedScreen} />
+            <Tab.Screen name="Add Photo" component={AddPhoto} />
             <Tab.Screen name="Feed3" component={FeedScreen} />
         </Tab.Navigator>
     </NavigationContainer>

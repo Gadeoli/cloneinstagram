@@ -7,12 +7,14 @@ import {
 import { 
     faTimes, 
     faComment,
-    faHome
+    faHome,
+    faCamera
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
     fab, 
     faTimes,
     faComment,
-    faHome
+    faHome, 
+    faCamera
 )
