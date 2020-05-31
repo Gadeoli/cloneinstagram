@@ -25,7 +25,6 @@ const Login = (props) => {
         />
         <TextInput  placeholder='Senha'
                     style={styles.input}
-                    autoFocus={true}
                     keyboardType='email-address'
                     value={password}
                     onChangeText={e => setPassword(e)}
@@ -33,7 +32,7 @@ const Login = (props) => {
         <TouchableOpacity onPress={() => login()} style={styles.button}>
             <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <TouchableOpacity onPress={() => {props.navigation.navigate('Register')}} style={styles.button}>
             <Text style={styles.buttonText}>Ainda não tem conta?</Text>
         </TouchableOpacity>
     </View>

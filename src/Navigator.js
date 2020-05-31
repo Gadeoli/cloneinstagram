@@ -1,13 +1,14 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { createStackNavigator } from '@react-navigation/stack'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 import FeedScreen from './screens/Feed'
 import AddPhotoScreen from './screens/AddPhoto'
 import ProfileScreen from './screens/Profile'
 import LoginScreen from './screens/Login'
+import RegisterScreen from './screens/Register'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -17,7 +18,8 @@ const authStack = () => {
         initialRouteName="Profile"
     >
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Auth" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
 }
 

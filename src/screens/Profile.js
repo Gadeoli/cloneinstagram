@@ -9,7 +9,7 @@ import {Gravatar, GravatarApi} from 'react-native-gravatar'
 
 const Profile = (props) => {
     const logout = () => {
-        props.navigation.navigate('Auth')
+        props.navigation.navigate('Login')
     }
 
     const options = {email: 'gabriel@mail.com', secure: true}
