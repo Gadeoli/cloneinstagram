@@ -1,14 +1,15 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { 
-    fab 
+    fab, faReact 
 } from '@fortawesome/free-brands-svg-icons'
 
 import { 
     faTimes, 
     faComment,
     faHome,
-    faCamera
+    faCamera,
+    faUser
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -16,5 +17,7 @@ library.add(
     faTimes,
     faComment,
     faHome, 
-    faCamera
+    faCamera,
+    faUser,
+    faReact
 )
