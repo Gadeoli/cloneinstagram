@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import {Gravatar, GravatarApi} from 'react-native-gravatar';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import {Gravatar, GravatarApi} from 'react-native-gravatar'
 
-// import { Container } from './styles';
+// import { Container } from './styles'
 
 const components = (props) => {
   return <View style={styles.container}>
@@ -13,10 +13,10 @@ const components = (props) => {
             style={styles.avatar} 
         />
         <Text style={styles.nickname}>{props.nickname}</Text>
-  </View>;
+  </View>
 }
 
-export default components;
+export default components
 
 const styles = StyleSheet.create({
     container: {
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     }
-});
+})

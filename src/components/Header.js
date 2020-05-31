@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, StyleSheet, Text, Platform, Image } from 'react-native';
+import React from 'react'
+import { View, StyleSheet, Text, Platform, Image } from 'react-native'
 
-import icon from '../../assets/imgs/icon.png';
+import icon from '../../assets/imgs/icon.png'
 
 const Header = () => {
   return <View style={styles.container}>
@@ -12,7 +12,7 @@ const Header = () => {
   </View>
 }
 
-export default Header;
+export default Header
 
 const styles = StyleSheet.create({
     container: {
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
         height: 30,
         fontSize: 28
     }
-});
+})

@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 const Comments = (props) => {
     const handleViewList = () => {
-        let view = null;
+        let view = null
 
         if(props.comments && props.comments.length){
             view = props.comments.map((item, index) => {
@@ -16,15 +16,15 @@ const Comments = (props) => {
             })
         }
 
-        return view;
-    };
+        return view
+    }
 
     return <View style={styles.container}>
         {handleViewList()}
-    </View>;
+    </View>
 }
 
-export default Comments;
+export default Comments
 
 const styles = StyleSheet.create({
     container: {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     comments: {
         color: '#555'
     }
-});
+})

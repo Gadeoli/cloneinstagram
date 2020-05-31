@@ -1,18 +1,20 @@
-import React from 'react';
-import { View, StyleSheet, Image, Dimensions } from 'react-native';
+import React from 'react'
+import { View, StyleSheet, Image, Dimensions } from 'react-native'
 
-import Author from './Author';
-import Comments from './Comments';
+import Author from './Author'
+import Comments from './Comments'
+import AddComment from './AddComment'
 
 const Post = (props) => {
   return <View style={styles.container}>
       <Image source={props.image} style={styles.image} />
       <Author email="gabriel@mail.com" nickname="gabriel"/>
       <Comments comments={props.comments} />
-  </View>;
+      <AddComment />
+  </View>
 }
 
-export default Post;
+export default Post
 
 const styles = StyleSheet.create({
     container: {
@@ -23,4 +25,4 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width * 3 / 4,
         resizeMode: 'contain'
     }
-});
+})
