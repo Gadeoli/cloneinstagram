@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {connect} from 'react-redux'
 
 import FeedScreen from './screens/Feed'
 import AddPhotoScreen from './screens/AddPhoto'
@@ -13,17 +14,18 @@ import RegisterScreen from './screens/Register'
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
-const authStack = () => {
-    return <Stack.Navigator
-        initialRouteName="Profile"
-    >
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-    </Stack.Navigator>
-}
+const Navigator = (props) => {
 
-const Navigator = () => {
+    const authStack = () => {
+        return <Stack.Navigator
+            initialRouteName={props.user && props.user.email ? 'Profile' : 'Login'}
+        >
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+        </Stack.Navigator>
+    }
+
     return <NavigationContainer>
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -61,4 +63,8 @@ const Navigator = () => {
     </NavigationContainer>
 }
 
-export default Navigator
+const mapStateToProps = ({user}) => {
+    return {user};
+}
+
+export default connect(mapStateToProps, null)(Navigator)

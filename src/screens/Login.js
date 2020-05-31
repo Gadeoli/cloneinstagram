@@ -6,12 +6,16 @@ import {
     TouchableOpacity,
     TextInput
 } from 'react-native'
+import { connect } from 'react-redux'
+import { login } from '../store/actions/user'
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const name = 'NomeDoUsuario'
 
     const login = () => {
+        props.onLogin({email, name, password})
         props.navigation.navigate('Feed')
     }
 
@@ -25,7 +29,7 @@ const Login = (props) => {
         />
         <TextInput  placeholder='Senha'
                     style={styles.input}
-                    keyboardType='email-address'
+                    secureTextEntry={true}
                     value={password}
                     onChangeText={e => setPassword(e)}
         />
@@ -38,7 +42,13 @@ const Login = (props) => {
     </View>
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: user => dispatch(login(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
 
 const styles = StyleSheet.create({
     container: {

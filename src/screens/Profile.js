@@ -6,25 +6,41 @@ import {
     TouchableOpacity
 } from 'react-native'
 import {Gravatar, GravatarApi} from 'react-native-gravatar'
+import {connect} from 'react-redux'
+import {logout} from '../store/actions/user'
 
 const Profile = (props) => {
     const logout = () => {
+        props.onLogout()
         props.navigation.navigate('Login')
     }
 
-    const options = {email: 'gabriel@mail.com', secure: true}
+    const options = {email: props.email, secure: true}
 
     return <View style={styles.container}>
         <Gravatar options={options} style={styles.avatar} />
-        <Text style={styles.nickname}>Gabriel</Text>
-        <Text style={styles.email}>gabriel@mail.com</Text>
+        <Text style={styles.nickname}>{props.name}</Text>
+        <Text style={styles.email}>{props.email}</Text>
         <TouchableOpacity onPress={() => logout()} style={styles.button}>
             <Text style={styles.buttonText}>Sair</Text>
         </TouchableOpacity>
     </View>
 }
 
-export default Profile
+const mapStateToProps = ({ user }) => {
+    return {
+        email: user.email,
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogout: () => dispatch(logout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)
 
 const styles = StyleSheet.create({
     container: {
