@@ -8,7 +8,7 @@ const initialState = {
     email: null
 }
 
-const reducer = (state = initialState, actions) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGGED_IN: 
             return {
