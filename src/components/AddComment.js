@@ -9,11 +9,9 @@ import {
 } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-
-
 const AddComment = () => {
     const [comment, setComment] = useState('')
-    const [editMode, setEditMode] = useState(true)
+    const [editMode, setEditMode] = useState(false)
 
     const handleEditMode = () => {
         Alert.alert('Adicionado', comment);

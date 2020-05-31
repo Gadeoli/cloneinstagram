@@ -8,7 +8,7 @@ import AddComment from './AddComment'
 const Post = (props) => {
   return <View style={styles.container}>
       <Image source={props.image} style={styles.image} />
-      <Author email="gabriel@mail.com" nickname="gabriel"/>
+      <Author email={props.email} nickname={props.nickname}/>
       <Comments comments={props.comments} />
       <AddComment />
   </View>
