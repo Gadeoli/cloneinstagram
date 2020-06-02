@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
+import {connect} from 'react-redux'
 import { 
     View,
     Text,
@@ -10,12 +11,15 @@ import {
     Platform,
     ScrollView,
     Alert
-} from 'react-native';
+} from 'react-native'
+
+import {addPost} from '../store/actions/posts'
 import ImagePicker from 'react-native-image-picker'
 
-const AddPhoto = () => {
+const AddPhoto = (props) => {
     const [image, setImage] = useState(null)
     const [comment, setComment] = useState('')
+    
     const pickerOptions = {
         title: 'Escolha a imagem',
         maxHeight: 600,
@@ -25,7 +29,7 @@ const AddPhoto = () => {
     const handlePickerImage = () => {
         ImagePicker.showImagePicker(pickerOptions, res => {
             if(res.error){
-                console.log('ImagePicker Error: ', res.error);
+                console.log('ImagePicker Error: ', res.error)
             }else if(!res.didCancel){
                 setImage(res)
             }
@@ -39,7 +43,21 @@ const AddPhoto = () => {
     }
 
     const handleSaveImage = () => {
-        Alert.alert('Imagem cadastrada', comment)
+        props.onAddPhoto({
+            id: Math.random(),
+            nickname: props.name,
+            email: props.email,
+            image,
+            comments: [{
+                nickname: props.name,
+                comment
+            }]
+        })
+
+        setImage(null)
+        setComment('')
+
+        props.navigation.navigate('Feed')
     }
 
     return <ScrollView>
@@ -60,7 +78,20 @@ const AddPhoto = () => {
     </ScrollView>
 }
 
-export default AddPhoto
+mapStateToProps =  ({user}) => {
+    return {
+        name: user.name,
+        email: user.email
+    }
+}
+
+mapDispatchToProps = dispatch => {
+    return {
+        onAddPhoto: post => dispatch(addPost(post))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPhoto)
 
 const styles = StyleSheet.create({
     container: {
