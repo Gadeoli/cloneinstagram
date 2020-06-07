@@ -27,13 +27,11 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-    switch (action) {
+    switch (action.type) {
         case ADD_POST: 
             return {
                 ...state, 
-                posts: state.posts.concat({
-                    ...action.payload
-                })
+                posts: state.posts.concat({...action.payload})
             }
         default: return state;
     }
