@@ -29,7 +29,8 @@ export default Comments
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 10,
+        marginHorizontal: 10,
+        marginBottom: 10
     },  
     commentContainer: {
         flexDirection: 'row',

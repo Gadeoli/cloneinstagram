@@ -21,7 +21,8 @@ export default components
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
     avatar: {
         width: 30,
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     },
     nickname: {
         color: '#444',
-        marginVertical: 10,
         fontSize: 15,
         fontWeight: 'bold'
     }

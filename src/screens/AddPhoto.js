@@ -16,6 +16,8 @@ import {
 import {addPost} from '../store/actions/posts'
 import ImagePicker from 'react-native-image-picker'
 
+const noUser = 'Você precisa estar logado para postar imagens' 
+
 const AddPhoto = (props) => {
     const [image, setImage] = useState(null)
     const [comment, setComment] = useState('')
@@ -27,6 +29,11 @@ const AddPhoto = (props) => {
     }
 
     const handlePickerImage = () => {
+        if(!props.name){
+            Alert.alert('Falha', noUser)
+            return false
+        }
+
         ImagePicker.showImagePicker(pickerOptions, res => {
             if(res.error){
                 console.log('ImagePicker Error: ', res.error)
@@ -43,6 +50,11 @@ const AddPhoto = (props) => {
     }
 
     const handleSaveImage = () => {
+        if(!props.name){
+            Alert.alert('Falha', noUser)
+            return false
+        }
+
         props.onAddPhoto({
             id: Math.random(),
             nickname: props.name,
@@ -70,6 +82,7 @@ const AddPhoto = (props) => {
             <TextInput  placeholder='Algum comentário para a foto?'
                         style={styles.input} value={comment}
                         onChangeText={e => setComment(e)} 
+                        editable={props.name != null}
             />
             <TouchableOpacity onPress={() => handleSaveImage()} style={styles.button}>
                 <Text style={styles.buttonText}>Salvar</Text>
