@@ -19,7 +19,7 @@ const initialState = {
             }]
         }, {
             id: Math.random(),
-            nickname: 'Francisco Leando',
+            nickname: 'Francisco Leandro',
             email: 'chick@mail.com',
             image: require('../../../assets/imgs/bw.jpg'),
             comments: []
