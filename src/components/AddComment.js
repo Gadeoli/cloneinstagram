@@ -7,14 +7,29 @@ import {
     TouchableWithoutFeedback as TWF,
     Alert
 } from 'react-native'
+import {connect} from 'react-redux'
+import {addComment} from '../store/actions/posts'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
-const AddComment = () => {
+const AddComment = (props) => {
     const [comment, setComment] = useState('')
     const [editMode, setEditMode] = useState(false)
 
     const handleEditMode = () => {
         Alert.alert('Adicionado', comment);
+    }
+
+    const handleAddComment = () => {
+        props.onAddComment({
+            postId: props.postId,
+            comment: {
+                nickname: props.name,
+                comment
+            }
+        })
+
+        setComment({comment: ''})
+        setEditMode(false)
     }
 
     const commentArea = () => {
@@ -25,7 +40,7 @@ const AddComment = () => {
                     style={styles.input}
                     value={comment}
                     onChangeText={e => setComment(e)}
-                    onSubmitEditing={() => handleEditMode()}
+                    onSubmitEditing={() => handleAddComment()}
                 />
                 <TWF onPress={() => setEditMode(false)}>
                     <FontAwesomeIcon icon="times" size={15} color="#555" />
@@ -48,7 +63,19 @@ const AddComment = () => {
     </View>
 }
 
-export default AddComment
+const mapStateToProps = ({user}) => {
+    return {
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddComment: payload => dispatch(addComment(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
 
 const styles = StyleSheet.create({
     container:{
