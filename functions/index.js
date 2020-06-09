@@ -16,10 +16,12 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         try {
             const tmpImage = '/tmp/imageToSave.jpg'
-            fs.writeFileSync(tmpImage, 
-            request.body.image, 'base64')
+            fs.writeFileSync(tmpImage, request.body.image, 'base64')
 
-            const bucket = storage.bucket('lambelambe-udemy.appspot.com', {
+            const bucket = storage.bucket('lambelambe-udemy.appspot.com')
+            const id = uuid()
+
+            bucket.upload(tmpImage, {
                 uploadType: 'media',
                 destination: `/posts/${id}.jpg`,
                 metadata: {
@@ -40,7 +42,7 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
                     return response.status(201).json({imageUrl})
                 }
             })
-            const id = uuid()
+            
             bucket.upload(tmpImage)
         } catch (err) {
             console.log(err)
