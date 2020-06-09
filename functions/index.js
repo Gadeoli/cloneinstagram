@@ -13,7 +13,7 @@ exports.uploadImage = functions.https.onRequest((request, response) => {
         try {
             fs.writeFileSync('/tmp/imageToSave.jpg', request.body.image, 'base64');
 
-            const bucket = storage.bucket('gs://udemylamb.appspot.com');
+            const bucket = storage.bucket('udemylamb.appspot.com');
             const id = uuid();
             bucket.upload('/tmp/imageToSave.jpg', {
                 uploadType: 'media',
