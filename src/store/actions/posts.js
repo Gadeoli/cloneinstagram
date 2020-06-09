@@ -1,16 +1,23 @@
 import {
-    ADD_COMMENT, SET_POSTS
+    ADD_COMMENT, 
+    SET_POSTS,
+    CREATING_POST,
+    POST_CREATED
 } from './actionTypes'
 import axios from 'axios'
 
 export const addPost = post => {
     const functionUrl = 'https://us-central1-lambelambe-udemy.cloudfunctions.net/uploadImage'
     return dispatch => {
+        dispatch(creatingPost())
         axios.post(functionUrl, {image: post.image.data})
             .then(resp => {
                 post.image = resp.data.imageUrl
                 axios.post('/posts.json', { ...post })
-                    .then(res => console.log(res))
+                    .then(res => {
+                        dispatch(fetchPosts())
+                        dispatch(postCreated())
+                    })
                     .catch(err => console.log(err))
             }).catch(err => {
                 console.log(err)
@@ -41,8 +48,20 @@ export const fetchPosts = () => {
                 for (let key in rawPosts){
                     posts.push({...rawPosts[key], id: key})   
                 }
-                dispatch(setPosts(posts))
+                dispatch(setPosts(posts.reverse()))
             })
             .catch(err => console.log(err))
+    }
+}
+
+export const creatingPost = () => {
+    return {
+        type: CREATING_POST
+    }
+}
+
+export const postCreated = () => {
+    return {
+        type: POST_CREATED
     }
 }

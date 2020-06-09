@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import { 
     View,
@@ -21,7 +21,16 @@ const noUser = 'Você precisa estar logado para postar imagens'
 const AddPhoto = (props) => {
     const [image, setImage] = useState(null)
     const [comment, setComment] = useState('')
+    const {loading} = props
     
+    useEffect(() => {
+        if(loading){
+            setImage('')
+            setComment('')
+            props.navigation.navigate('Feed')
+        }
+    }, [loading])
+
     const pickerOptions = {
         title: 'Escolha a imagem',
         maxHeight: 600,
@@ -65,11 +74,6 @@ const AddPhoto = (props) => {
                 comment
             }]
         })
-
-        setImage(null)
-        setComment('')
-
-        props.navigation.navigate('Feed')
     }
 
     return <ScrollView>
@@ -84,17 +88,22 @@ const AddPhoto = (props) => {
                         onChangeText={e => setComment(e)} 
                         editable={props.name != null}
             />
-            <TouchableOpacity onPress={() => handleSaveImage()} style={styles.button}>
+            <TouchableOpacity 
+                onPress={() => handleSaveImage()} 
+                style={[styles.button, loading ? styles.buttonDisabled : null]}
+                disable={loading}
+            >
                 <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
         </View>
     </ScrollView>
 }
 
-mapStateToProps =  ({user}) => {
+mapStateToProps =  ({user, posts}) => {
     return {
         name: user.name,
-        email: user.email
+        email: user.email,
+        loading: posts.isUploading
     }
 }
 
@@ -139,5 +148,8 @@ const styles = StyleSheet.create({
     input: {
         marginTop: 20,
         width: '90%'
+    },
+    buttonDisabled: {
+        backgroundColor: '#AAA'
     }
 })
