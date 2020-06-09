@@ -11,7 +11,7 @@ const Post = (props) => {
 
     return <View style={styles.container}>
         <Author email={props.email} nickname={props.nickname}/>
-        <Image source={props.image} style={styles.image} />
+        <Image source={{uri: props.image}} style={styles.image} />
         <Comments comments={props.comments} />
         {addComment}
     </View>

@@ -1,12 +1,17 @@
 import React, {useState} from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 import {connect} from 'react-redux'
+import {fetchPosts} from '../store/actions/posts'
 
 import Header from '../components/Header'
 import Post from '../components/Post'
 
 const Feed = (props) => {
-    console.log(props.posts)
+
+    useState(() => {
+        props.onFetchPosts()
+    }, [])
+
     return <View style={styles.container}>
         <Header />
         <FlatList 
@@ -23,7 +28,13 @@ const mapStateToProps = ({posts}) => {
     }
 }
 
-export default connect(mapStateToProps)(Feed)
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchPosts: () => dispatch(fetchPosts())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)
 
 const styles = StyleSheet.create({
     container: {

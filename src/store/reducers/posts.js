@@ -1,38 +1,18 @@
 import {
-    ADD_POST, 
+    SET_POSTS, 
     ADD_COMMENT
 } from '../actions/actionTypes'
 
 const initialState = {
-    posts: [
-        {
-            id: Math.random(),
-            nickname: 'Rafael Arruda',
-            email: 'rafael@mail.com',
-            image: require('../../../assets/imgs/fence.jpg'),
-            comments: [{
-                nickname: 'John Sheldon',
-                comment: 'Stunning'
-            }, {
-                nickname: 'Ana Julia',
-                comment: 'Foto linda'
-            }]
-        }, {
-            id: Math.random(),
-            nickname: 'Francisco Leandro',
-            email: 'chick@mail.com',
-            image: require('../../../assets/imgs/bw.jpg'),
-            comments: []
-        }
-    ]
+    posts: []
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST: 
+        case SET_POSTS: 
             return {
-                ...state, 
-                posts: state.posts.concat({...action.payload})
+                ...state,
+                posts: action.payload
             }
         case ADD_COMMENT:
             return {
