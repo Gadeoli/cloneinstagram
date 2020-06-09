@@ -13,8 +13,6 @@ axios.defaults.baseURL = 'https://lambelambe-udemy.firebaseio.com/'
 
 const store = storeConfig()
 
-axios.defaults.baseURL = 'https://udemylamb.firebaseio.com/'
-
 const App = () => (
     <Provider store={store}>
         <Navigator />
