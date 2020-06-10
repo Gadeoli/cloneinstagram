@@ -9,12 +9,12 @@ import { setMessage } from './message'
 
 export const addPost = post => {
     const functionUrl = 'https://us-central1-lambelambe-udemy.cloudfunctions.net/uploadImage'
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(creatingPost())
         axios.post(functionUrl, {image: post.image.data})
             .then(resp => {
                 post.image = resp.data.imageUrl
-                axios.post('/posts.json', { ...post })
+                axios.post(`/posts.json?auth=${getState().user.token}`, { ...post })
                     .then(res => {
                         dispatch(fetchPosts())
                         dispatch(postCreated())
@@ -27,12 +27,12 @@ export const addPost = post => {
 }
 
 export const addComment = payload => {
-    return dispatch => {
+    return (dispatch, getState) => {
         axios.get(`/posts/${payload.postId}.json`)
             .then(res => {
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
-                axios.patch(`/posts/${payload.postId}.json`, {comments})
+                axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, {comments})
                     .then(res => {
                         dispatch(fetchPosts())
                     })

@@ -20,7 +20,7 @@ const Register = (props) => {
             setName('')
             setEmail('')
             setPassword('')
-            props.navigation.navigate('Feed')
+            props.navigation.navigate('Profile')
         }
     }, [loading])
 

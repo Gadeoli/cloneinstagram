@@ -34,10 +34,7 @@ export const createUser = user => {
                 axios.put(`users/${res.data.localId}.json`, {
                     name: user.name
                 }).then(res => {
-                    delete user.password
-                    user.id = res.data.localId
-                    dispatch(userLogged(user))
-                    dispatch(userLoaded())
+                    dispatch(login(user))
                 }).catch(err => {
                     dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
                 })
@@ -69,6 +66,7 @@ export const login = user => {
             returnSecureToken: true
         }).then(res => {
             if(res.data.localId){
+                user.token = res.data.idToken
                 axios.get(`/users/${res.data.localId}.json`)
                     .then(res => {
                         delete user.password
