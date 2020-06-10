@@ -17,11 +17,10 @@ const Login = (props) => {
     const route = useRoute();
     
     useEffect(() => {
-        console.log('effect')
         if((name && route.name !== 'Profile') || loading){
             props.navigation.navigate('Profile')
         }
-    })
+    }, [loading, name, route])
 
 
     const login = () => {

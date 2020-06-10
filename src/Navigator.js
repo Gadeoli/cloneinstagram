@@ -3,30 +3,36 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import {connect} from 'react-redux'
 
 import FeedScreen from './screens/Feed'
 import AddPhotoScreen from './screens/AddPhoto'
 import ProfileScreen from './screens/Profile'
 import LoginScreen from './screens/Login'
 import RegisterScreen from './screens/Register'
+import SplashScreen from './screens/Splash'
 
-const Tab = createBottomTabNavigator()
-const Stack = createStackNavigator()
+const TabBottomNav = createBottomTabNavigator()
+const StackAuth = createStackNavigator()
+const StackApp = createStackNavigator()
 
 const Navigator = (props) => {
     const authStack = () => {
-        return <Stack.Navigator
-            initialRouteName={props.user && props.user.email ? 'Profile' : 'Login'}
-        >
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-        </Stack.Navigator>
+        return <StackAuth.Navigator initialRouteName='Login'>
+            <StackAuth.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+            <StackAuth.Screen name="Login" component={LoginScreen} />
+            <StackAuth.Screen name="Register" component={RegisterScreen} />
+        </StackAuth.Navigator>
     }
 
-    return <NavigationContainer>
-        <Tab.Navigator
+    const appStack = () => {
+        return <StackApp.Navigator initialRouteName='Splash'>
+            <StackApp.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }}/>
+            <StackApp.Screen name="App" component={tabBottomNavigator} options={{ headerShown: false }}/>
+        </StackApp.Navigator>
+    }
+
+    const tabBottomNavigator = () => {
+        return <TabBottomNav.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName
@@ -55,15 +61,13 @@ const Navigator = (props) => {
                 showLabel: false 
             }}
         >
-            <Tab.Screen name="Add Photo" component={AddPhotoScreen} />
-            <Tab.Screen name="Feed" component={FeedScreen} />
-            <Tab.Screen name="Profile" component={authStack} />
-        </Tab.Navigator>
-    </NavigationContainer>
+            <TabBottomNav.Screen name="Add Photo" component={AddPhotoScreen} />
+            <TabBottomNav.Screen name="Feed" component={FeedScreen} />
+            <TabBottomNav.Screen name="Profile" component={authStack} />
+        </TabBottomNav.Navigator>
+    }
+
+    return <NavigationContainer>{appStack()}</NavigationContainer>
 }
 
-const mapStateToProps = ({user}) => {
-    return {user};
-}
-
-export default connect(mapStateToProps, null)(Navigator)
+export default Navigator
