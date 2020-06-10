@@ -33,10 +33,14 @@ export const createUser = user => {
                 axios.put(`users/${res.data.localId}.json`, {
                     name: user.name
                 }).then(res => {
-                    console.log('Usuário cadastrado com sucesso')
-                }).catch(err => console.log(err))
+                    dispatch(setMessage({title: 'Sucesso', text: 'Usuário criado com sucesso!!'}))
+                }).catch(err => {
+                    dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+                })
             }
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+        })
     }
 }
 
@@ -67,8 +71,12 @@ export const login = user => {
                         user.name = res.data.name
                         dispatch(userLogged(user))
                         dispatch(userLoaded())
-                    }).catch(err => console.log(err))
+                    }).catch(err => {
+                        dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+                    })
             }
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+        })
     }
 }

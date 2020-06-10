@@ -5,6 +5,7 @@ import {
     POST_CREATED
 } from './actionTypes'
 import axios from 'axios'
+import { setMessage } from './message'
 
 export const addPost = post => {
     const functionUrl = 'https://us-central1-lambelambe-udemy.cloudfunctions.net/uploadImage'
@@ -18,9 +19,9 @@ export const addPost = post => {
                         dispatch(fetchPosts())
                         dispatch(postCreated())
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => dispatch(setMessage({title: 'Erro', text: err})))
             }).catch(err => {
-                console.log(err)
+                dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
             })
     }
 }
@@ -35,9 +36,13 @@ export const addComment = payload => {
                     .then(res => {
                         dispatch(fetchPosts())
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+                    })
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+            })
     }
 }
 
@@ -59,7 +64,9 @@ export const fetchPosts = () => {
                 }
                 dispatch(setPosts(posts.reverse()))
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
+            })
     }
 }
 
