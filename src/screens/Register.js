@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { 
     View,
     Text, 
@@ -13,8 +13,18 @@ const Register = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {loading} = props
+    
+    useEffect(() => {
+        if(loading){
+            setName('')
+            setEmail('')
+            setPassword('')
+            props.navigation.navigate('Feed')
+        }
+    }, [loading])
 
-  return <View style={styles.container}>
+    return <View style={styles.container}>
         <TextInput  placeholder="Nome" 
                     style={styles.input}
                     autoFocus={true}
@@ -41,13 +51,19 @@ const Register = (props) => {
   </View>
 }
 
+const mapStateToProps = ({user}) => {
+    return {
+        loading: user.isLoading
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onCreateUser: user => dispatch(createUser(user))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)
 
 const styles = StyleSheet.create({
     container: {

@@ -5,6 +5,7 @@ import {
     LOADING_USER
 } from './actionTypes'
 import axios from 'axios'
+import {setMessage} from './message'
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 const API_KEY = 'AIzaSyDd_hS5u49vYmSLD4KHp_sDmzx_kT1N2rU'
@@ -33,7 +34,10 @@ export const createUser = user => {
                 axios.put(`users/${res.data.localId}.json`, {
                     name: user.name
                 }).then(res => {
-                    dispatch(setMessage({title: 'Sucesso', text: 'Usuário criado com sucesso!!'}))
+                    delete user.password
+                    user.id = res.data.localId
+                    dispatch(userLogged(user))
+                    dispatch(userLoaded())
                 }).catch(err => {
                     dispatch(setMessage({title: 'Erro', text: 'Ocorreu um erro inesperado!!'}))
                 })
@@ -67,7 +71,7 @@ export const login = user => {
             if(res.data.localId){
                 axios.get(`/users/${res.data.localId}.json`)
                     .then(res => {
-                        user.password = null
+                        delete user.password
                         user.name = res.data.name
                         dispatch(userLogged(user))
                         dispatch(userLoaded())
