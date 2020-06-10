@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { 
     View,
     Text,
@@ -13,10 +13,17 @@ const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const name = 'NomeDoUsuario'
+    const {loading} = props
+    
+    useEffect(() => {
+        if(loading){
+            props.navigation.navigate('Profile')
+        }
+    }, [loading])
+
 
     const login = () => {
         props.onLogin({email, name, password})
-        props.navigation.navigate('Feed')
     }
 
     return <View style={styles.container}>
@@ -42,13 +49,19 @@ const Login = (props) => {
     </View>
 }
 
+const mapStateToProps = ({user}) => {
+    return {
+        loading: user.isLoading
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         onLogin: user => dispatch(login(user))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
 const styles = StyleSheet.create({
     container: {

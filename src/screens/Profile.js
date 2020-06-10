@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     },
     email: {
         marginTop: 20,
-        fontSize: 25
+        fontSize: 25,
+        textAlign: 'center'
     },
     button: {
         marginTop: 30,

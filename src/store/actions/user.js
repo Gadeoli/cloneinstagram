@@ -1,13 +1,15 @@
 import {
     USER_LOGGED_IN,
-    USER_LOGGED_OUT
+    USER_LOGGED_OUT,
+    USER_LOADED,
+    LOADING_USER
 } from './actionTypes'
 import axios from 'axios'
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 const API_KEY = 'AIzaSyDd_hS5u49vYmSLD4KHp_sDmzx_kT1N2rU'
 
-export const login = user => {
+export const userLogged = user => {
     return {
         type: USER_LOGGED_IN,
         payload: user
@@ -33,6 +35,39 @@ export const createUser = user => {
                 }).then(res => {
                     console.log('Usuário cadastrado com sucesso')
                 }).catch(err => console.log(err))
+            }
+        }).catch(err => console.log(err))
+    }
+}
+
+export const loadingUser = () => {
+    return {
+        type: LOADING_USER
+    }
+}
+
+export const userLoaded = () => {
+    return {
+        type: USER_LOADED
+    }
+}
+
+export const login = user => {
+    return dispatch => {
+        dispatch(loadingUser())
+        axios.post(`${authBaseURL}/verifyPassword?key=${API_KEY}`, {
+            email: user.email,
+            password: user.password,
+            returnSecureToken: true
+        }).then(res => {
+            if(res.data.localId){
+                axios.get(`/users/${res.data.localId}.json`)
+                    .then(res => {
+                        user.password = null
+                        user.name = res.data.name
+                        dispatch(userLogged(user))
+                        dispatch(userLoaded())
+                    }).catch(err => console.log(err))
             }
         }).catch(err => console.log(err))
     }
