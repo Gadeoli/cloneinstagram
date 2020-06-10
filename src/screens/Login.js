@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useRoute} from '@react-navigation/native';
 import { 
     View,
     Text,
@@ -12,14 +13,15 @@ import { login } from '../store/actions/user'
 const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const name = 'NomeDoUsuario'
-    const {loading} = props
+    const {loading, name} = props
+    const route = useRoute();
     
     useEffect(() => {
-        if(loading){
+        console.log('effect')
+        if((name && route.name !== 'Profile') || loading){
             props.navigation.navigate('Profile')
         }
-    }, [loading])
+    })
 
 
     const login = () => {
@@ -51,7 +53,8 @@ const Login = (props) => {
 
 const mapStateToProps = ({user}) => {
     return {
-        loading: user.isLoading
+        loading: user.isLoading,
+        name: user.name
     }
 }
 

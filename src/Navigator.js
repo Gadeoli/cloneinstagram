@@ -15,7 +15,6 @@ const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 const Navigator = (props) => {
-
     const authStack = () => {
         return <Stack.Navigator
             initialRouteName={props.user && props.user.email ? 'Profile' : 'Login'}
